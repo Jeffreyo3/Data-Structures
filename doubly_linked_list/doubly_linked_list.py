@@ -264,6 +264,11 @@ class DoublyLinkedList:
     in the List.
     """
     def get_max(self):
+        if self.length == 0:
+            return 0
+        if self.length == 1:
+            return self.head.value
+
         curr_node = self.head
         max_val = 0
         for num in range(self.length):
