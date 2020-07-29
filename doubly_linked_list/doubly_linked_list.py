@@ -79,7 +79,23 @@ class DoublyLinkedList:
     the old tail node's next pointer accordingly.
     """
     def add_to_tail(self, value):
-        pass
+        # create variable to hold the new node 
+        # & assign its prev to the current list tail
+        new_node = ListNode(value)
+        new_node.prev = self.tail
+        
+        # if list is empty, make first added node the head
+        if self.tail is None:
+            self.head = new_node
+        # if list already has items in it, assign the new node
+        # to be the next of the current tail
+        else:
+            self.tail.next = new_node
+        
+        # set the tail of the list to the new node & increase length
+        self.tail = new_node
+        self.length += 1
+        return self
             
     """
     Removes the List's current tail node, making the 
@@ -87,7 +103,20 @@ class DoublyLinkedList:
     Returns the value of the removed Node.
     """
     def remove_from_tail(self):
-        pass
+        # if there is already no tail, do nothing
+        if self.tail is None:
+            return self
+        # if the tail and head are the same, 'reset' list
+        elif self.tail is self.head:
+            self.tail = None
+            self.head = None
+            self.length = 0
+            return self
+        # set tail to prev item in list & reduce length
+        else:
+            self.tail = self.tail.prev
+            self.length -= 1
+            return self
             
     """
     Removes the input node from its current spot in the 
@@ -133,9 +162,13 @@ listything.remove_from_head()
 print(listything)
 listything.remove_from_head()
 print(listything)
+listything.remove_from_tail()
+print(f"HERE! {listything}")
 listything.remove_from_head()
 print(listything)
-listything.remove_from_head()
+
+listything.add_to_tail(0)
 print(listything)
-listything.remove_from_head()
+
+listything.remove_from_tail()
 print(listything)
