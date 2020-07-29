@@ -130,18 +130,20 @@ class DoublyLinkedList:
             pass
 
         # if current node is already the head, do nothing
-        if self.head.prev == None:
+        if self.head == node:
             pass
         
         elif self.length == 2:
             self.tail = self.head
             self.head.prev = None
+            self.length -= 1
             self.add_to_head(node.value)
             return self
 
         elif self.tail == node:
             self.tail = self.tail.prev
             self.tail.next = None
+            self.length -= 1
             self.add_to_head(node.value)
             return self
         else:
@@ -173,7 +175,7 @@ class DoublyLinkedList:
             return self
 
         # if current node is already the tail, do nothing
-        if self.tail.next == None:
+        if self.tail == node:
             return self
         
         # copy current node
@@ -208,8 +210,10 @@ class DoublyLinkedList:
             self.length = 0
             return self
 
-        node.next.prev = node.prev
-        node.prev.next = node.next
+        next_node = node.next
+        prev_node = node.prev
+        node.next.prev = prev_node
+        node.prev.next = next_node
 
 
     """
@@ -258,6 +262,14 @@ print(listything)
 
 print(listything.remove_from_head())
 # list length is at 0 at this point, but should be 1 according to the test
+
+listything.add_to_head(1)
+listything.add_to_head(2)
+listything.add_to_tail(3)
+print(text)
+print(listything)
+
+listything.move_to_front(listything.tail)
 
 print(text)
 print(listything)
