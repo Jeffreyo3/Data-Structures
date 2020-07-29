@@ -42,7 +42,7 @@ class DoublyLinkedListTests(unittest.TestCase):
         self.assertEqual(len(self.dll), 1)
         self.assertEqual(self.dll.remove_from_head(), 55)
         self.assertEqual(len(self.dll), 0)
-
+# list length is at 0 at this point, but should be 1 according to the test
     def test_list_add_to_tail(self):
         self.assertEqual(self.dll.tail.value, 1)
         self.assertEqual(len(self.dll), 1)
