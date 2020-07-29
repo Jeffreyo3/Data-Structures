@@ -178,22 +178,35 @@ class DoublyLinkedList:
         if self.tail == node:
             return self
         
-        # copy current node
-        curr_node = node
-        print(node)
-        next_node = node.next
-        prev_node = node.prev
-        # assign prev & next nodes to each other
-        node.prev = prev_node
-        node.next = next_node
+        elif self.length == 2:
+            self.head = self.tail
+            self.tail.next = None
+            self.length -= 1
+            self.add_to_tail(node.value)
+            return self
+        
+        elif self.head == node:
+            self.head = self.head.next
+            self.head.prev = None
+            self.length -= 1
+            self.add_to_tail(node.value)
+        else:
+            # copy current node
+            curr_node = node
+            print(node)
+            next_node = node.next
+            prev_node = node.prev
+            # assign prev & next nodes to each other
+            node.prev = prev_node
+            node.next = next_node
 
-        # assign current node to tail's next
-        self.tail.next = curr_node
-        curr_node.prev = self.tail
+            # assign current node to tail's next
+            self.tail.next = curr_node
+            curr_node.prev = self.tail
 
-        # make current node the new tail
-        self.tail = curr_node
-        return self
+            # make current node the new tail
+            self.tail = curr_node
+            return self
 
     """
     Deletes the input node from the List, preserving the 
@@ -202,18 +215,48 @@ class DoublyLinkedList:
     def delete(self, node):
         # if list is empty, do nothing
         if self.length == 0:
-            return self
+            pass
         # if list is one item, reset list
-        if self.length == 1:
-            self.prev = None
-            self.next = None
+        elif self.length == 1:
+            self.head = None
+            self.tail = None
             self.length = 0
             return self
 
-        next_node = node.next
-        prev_node = node.prev
-        node.next.prev = prev_node
-        node.prev.next = next_node
+        # if there are 2 items, check if head or tail
+        elif self.length == 2:
+            if node == self.head:
+                self.tail.prev = None
+                self.head = self.tail
+                self.length = 1
+                return self
+            
+            if node == self.tail:
+                self.head.next = None
+                self.tail = self.head
+                self.length = 1
+                return self
+
+        else:
+            # if item to delete is the current tail
+            if node == self.tail:
+                self.tail = node.prev
+                node.prev.next = None
+                self.length -= 1
+                return self
+            # if item to delete is the current head
+            elif node == self.head:
+                self.head = node.next
+                node.next.prev = None
+                self.length -= 1
+                return self
+            
+            else: 
+                next_node = node.next
+                prev_node = node.prev
+                node.next.prev = prev_node
+                node.prev.next = next_node
+                self.length -= 1
 
 
     """
@@ -221,8 +264,19 @@ class DoublyLinkedList:
     in the List.
     """
     def get_max(self):
-        pass
+        curr_node = self.head
+        max_val = 0
+        for num in range(self.length):
+            if curr_node.value > max_val:
+                max_val = curr_node.value
+            
+            if curr_node.next == None:
+                return max_val
+            else:
+                curr_node = curr_node.next
 
+
+# Emulate tests to console
 text = "**********"
 nodey = ListNode(1)
 listything = DoublyLinkedList(nodey)
@@ -261,16 +315,107 @@ print(text)
 print(listything)
 
 print(listything.remove_from_head())
-# list length is at 0 at this point, but should be 1 according to the test
 
-listything.add_to_head(1)
-listything.add_to_head(2)
-listything.add_to_tail(3)
+# 
+testaddtail = DoublyLinkedList(nodey)
+
+testaddtail.add_to_tail(30)
 print(text)
-print(listything)
+print(testaddtail)
 
-listything.move_to_front(listything.tail)
-
+testaddtail.add_to_tail(20)
 print(text)
-print(listything)
+print(testaddtail)
 
+# 
+testaddhead = DoublyLinkedList(nodey)
+print(text)
+print(testaddhead)
+
+testaddhead.add_to_head(10)
+print(text)
+print(testaddhead)
+
+# 
+testmovetoend = DoublyLinkedList(nodey)
+print(text)
+print(testmovetoend)
+
+testmovetoend.add_to_head(40)
+print(text)
+print(testmovetoend)
+
+testmovetoend.move_to_end(testmovetoend.head)
+print(text)
+print(testmovetoend)
+
+testmovetoend.add_to_tail(4)
+testmovetoend.move_to_end(testmovetoend.head.next)
+print(text)
+print(testmovetoend)
+print(f"{text}\ntail prev val should be 4\n{testmovetoend.tail.prev}")
+
+# 
+testmovetofront = DoublyLinkedList(nodey)
+print(text)
+print(testmovetofront)
+
+testmovetofront.add_to_tail(3)
+print(text)
+print(testmovetofront)
+
+testmovetofront.move_to_front(testmovetofront.tail)
+print(text)
+print(testmovetofront)
+
+testmovetofront.add_to_head(29)
+print(text)
+print(testmovetofront)
+
+testmovetofront.move_to_front(testmovetofront.head.next)
+print(text)
+print(testmovetofront)
+print(f"{text}\nhead next val should be 29\n{testmovetofront.head.next.value}")
+
+# 
+testdelete = DoublyLinkedList(nodey)
+print(text)
+print(testdelete)
+
+testdelete.delete(testdelete.head)
+print(text)
+print(testdelete)
+
+testdelete.add_to_tail(1)
+testdelete.add_to_head(9)
+testdelete.add_to_tail(6)
+print(text)
+print(testdelete)
+
+testdelete.delete(testdelete.head)
+print(text)
+print(testdelete)
+print(testdelete.head.value)
+print(testdelete.tail.value)
+print(testdelete.length)
+
+testdelete.delete(testdelete.head)
+print(text)
+print(testdelete)
+
+# 
+testgetmax = DoublyLinkedList(nodey)
+print(text)
+print(testgetmax.get_max())
+
+testgetmax.add_to_tail(100)
+print(text)
+print(testgetmax.get_max())
+
+testgetmax.add_to_tail(55)
+print(text)
+print(testgetmax.get_max())
+
+testgetmax.add_to_tail(101)
+print(text)
+print(testgetmax.get_max())
