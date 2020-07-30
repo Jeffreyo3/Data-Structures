@@ -75,6 +75,32 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
+        # 1. Base case - no more nodes in our subtree
+        # 2. Recursive case
+        fn(self.value)
+
+        if self.left is not None: # if self.left
+            self.left.for_each(fn)
+        if self.right is not None: # if self.right
+            self.right.for_each(fn)
+
+    # STRETCH
+    def delete(self, value):
+        # search like in contains()
+        curr_node = self
+        # if node at bottom level
+
+            # update parent left/right
+
+        # if node has only 1 child
+
+            # parent.left/right = curr_node.left/right
+        
+        # if node has two children
+
+            # 'greater'(right?) child needs to become new parent
+            
+        
         pass
 
     # Part 2 -----------------------
