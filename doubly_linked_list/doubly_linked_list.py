@@ -217,7 +217,7 @@ class DoublyLinkedList:
         if self.length == 0:
             pass
         # if list is one item, reset list
-        elif self.length == 1:
+        elif node == self.head and node == self.tail:
             self.head = None
             self.tail = None
             self.length = 0
