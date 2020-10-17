@@ -217,7 +217,7 @@ class DoublyLinkedList:
         if self.length == 0:
             pass
         # if list is one item, reset list
-        elif self.length == 1:
+        elif node == self.head and node == self.tail:
             self.head = None
             self.tail = None
             self.length = 0
@@ -264,6 +264,11 @@ class DoublyLinkedList:
     in the List.
     """
     def get_max(self):
+        if self.length == 0:
+            return 0
+        if self.length == 1:
+            return self.head.value
+
         curr_node = self.head
         max_val = 0
         for num in range(self.length):
