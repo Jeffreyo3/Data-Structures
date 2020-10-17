@@ -86,23 +86,28 @@ class BSTNode:
             self.right.for_each(fn)
 
     # STRETCH
-    def delete(self, value):
-        # search like in contains()
-        curr_node = self
-        # if node at bottom level
-
-            # update parent left/right
-
-        # if node has only 1 child
-
-            # parent.left/right = curr_node.left/right
-        
-        # if node has two children
-
-            # 'greater'(right?) child needs to become new parent
+    def deleteNode(self, root, key):
+        if not root:
+            return root
+        elif root.value > key:
+            root.left = self.deleteNode(root.left, key)
+        elif root.value < key:
+            root.right = self.deleteNode(root.right, key)
+        else:
+            if not root.right:
+                return root.left
+            if not root.right.left:
+                root.right.left = root.left
+                return root.right
             
-        
-        pass
+            next = root.right
+            while next.left:
+                next = next.left
+
+            root.value, next.value = next.value, root.value
+            self.deleteNode(root.right, key)
+            
+        return root
 
     # Part 2 -----------------------
 
@@ -191,17 +196,33 @@ class BSTNode:
 """
 This code is necessary for testing the `print` methods
 """
-bst = BSTNode(1)
-
+bst = BSTNode(10)
+bst.insert(18)
+bst.insert(15)
+bst.insert(17)
+bst.insert(16)
+bst.insert(14)
+bst.insert(12)
+bst.insert(19)
+bst.insert(20)
 bst.insert(8)
 bst.insert(5)
 bst.insert(7)
 bst.insert(6)
-bst.insert(3)
 bst.insert(4)
 bst.insert(2)
+bst.insert(9)
+bst.insert(11)
+bst.insert(24)
+bst.insert(1)
+bst.insert(3)
 
 bst.bft_print()
+bst.deleteNode(bst, 1)
+print("===")
+bst.bft_print()
+print("===")
+bst.deleteNode(bst, 18)
 bst.dft_print()
 
 # print("elegant methods")
